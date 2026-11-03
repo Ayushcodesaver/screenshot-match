@@ -74,7 +74,7 @@ export function ProductCard({ item }: { item: Item }) {
   const { add } = useCart();
   return (
     <article className="group flex flex-col bg-rail p-6 odd:bg-card">
-      <div className="aspect-[4/5] p-4"><ItemImage item={item} className="h-full w-full" /></div>
+      <div className="h-80 overflow-hidden p-4"><ItemImage item={item} className="h-full w-full" /></div>
       <div className="mt-4 flex items-end justify-between gap-4">
         <div>
           <h3 className="wide text-[10px] tracking-[.14em]">{item.name}</h3>
