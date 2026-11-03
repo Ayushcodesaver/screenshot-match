@@ -31,10 +31,10 @@ const cards=ITEMS.map(([a,b,c,d,name,price],i)=>{
   e.querySelector('.shot').append(crop(PIECES,a,c,b-a,d-c,960,720));rail.append(e);return e;
 });
 for(let i=0;i<=N;i++){const b=document.createElement('b');b.textContent=FIRST+i%N;roll.append(b)}
-let cart=0;
+let bag=JSON.parse(localStorage.getItem('mv-cart')||'[]'),cart=bag.length;$('cart').textContent=cart;
 rail.addEventListener('click',e=>{
   const f=e.target.closest('.fav');if(f)f.setAttribute('aria-pressed',f.getAttribute('aria-pressed')!=='true');
-  if(e.target.closest('.add'))$('cart').textContent=++cart;
+  if(e.target.closest('.add')){bag.push(cards.indexOf(e.target.closest('.card')));localStorage.setItem('mv-cart',JSON.stringify(bag));$('cart').textContent=++cart;}
 });
 
 let W=0,H=0,base=0,cardS=0,side=false,dirty=true,p=0,target=0,last=0;
