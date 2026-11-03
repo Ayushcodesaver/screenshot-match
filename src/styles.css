@@ -19,6 +19,12 @@
  */
 
 @theme inline {
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Michroma", sans-serif;
+  --color-rail: var(--rail);
+  --color-mid: var(--mid);
+  --color-dim: var(--dim);
+  --color-blush: var(--blush);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -62,9 +68,13 @@
 }
 
 :root {
-  --radius: 0.625rem;
+  --radius: 0rem;
   --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --foreground: oklch(0.21 0.012 260);
+  --rail: oklch(0.97 0.006 250);
+  --mid: oklch(0.56 0.015 255);
+  --dim: oklch(0.74 0.015 250);
+  --blush: oklch(0.78 0.05 25);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.129 0.042 264.695);
   --popover: oklch(1 0 0);
@@ -141,4 +151,9 @@
     background-color: var(--color-background);
     color: var(--color-foreground);
   }
+}
+
+@utility wide {
+  font-family: var(--font-display);
+  text-transform: uppercase;
 }
