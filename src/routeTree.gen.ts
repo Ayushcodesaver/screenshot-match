@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AccessoriesRouteImport } from './routes/accessories'
+import { Route as BeautyRouteImport } from './routes/beauty'
+import { Route as CartRouteImport } from './routes/cart'
+import { Route as ClothingRouteImport } from './routes/clothing'
+import { Route as CollectionsRouteImport } from './routes/collections'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as LookbookRouteImport } from './routes/lookbook'
+import { Route as MaisonRouteImport } from './routes/maison'
+import { Route as OurWorldRouteImport } from './routes/our-world'
+import { Route as ShopRouteImport } from './routes/shop'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccessoriesRoute = AccessoriesRouteImport.update({
+  id: '/accessories',
+  path: '/accessories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BeautyRoute = BeautyRouteImport.update({
+  id: '/beauty',
+  path: '/beauty',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CartRoute = CartRouteImport.update({
+  id: '/cart',
+  path: '/cart',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ClothingRoute = ClothingRouteImport.update({
+  id: '/clothing',
+  path: '/clothing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CollectionsRoute = CollectionsRouteImport.update({
+  id: '/collections',
+  path: '/collections',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LookbookRoute = LookbookRouteImport.update({
+  id: '/lookbook',
+  path: '/lookbook',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MaisonRoute = MaisonRouteImport.update({
+  id: '/maison',
+  path: '/maison',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OurWorldRoute = OurWorldRouteImport.update({
+  id: '/our-world',
+  path: '/our-world',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ShopRoute = ShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/accessories': typeof AccessoriesRoute
+  '/beauty': typeof BeautyRoute
+  '/cart': typeof CartRoute
+  '/clothing': typeof ClothingRoute
+  '/collections': typeof CollectionsRoute
+  '/login': typeof LoginRoute
+  '/lookbook': typeof LookbookRoute
+  '/maison': typeof MaisonRoute
+  '/our-world': typeof OurWorldRoute
+  '/shop': typeof ShopRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/accessories': typeof AccessoriesRoute
+  '/beauty': typeof BeautyRoute
+  '/cart': typeof CartRoute
+  '/clothing': typeof ClothingRoute
+  '/collections': typeof CollectionsRoute
+  '/login': typeof LoginRoute
+  '/lookbook': typeof LookbookRoute
+  '/maison': typeof MaisonRoute
+  '/our-world': typeof OurWorldRoute
+  '/shop': typeof ShopRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/accessories': typeof AccessoriesRoute
+  '/beauty': typeof BeautyRoute
+  '/cart': typeof CartRoute
+  '/clothing': typeof ClothingRoute
+  '/collections': typeof CollectionsRoute
+  '/login': typeof LoginRoute
+  '/lookbook': typeof LookbookRoute
+  '/maison': typeof MaisonRoute
+  '/our-world': typeof OurWorldRoute
+  '/shop': typeof ShopRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/accessories'
+    | '/beauty'
+    | '/cart'
+    | '/clothing'
+    | '/collections'
+    | '/login'
+    | '/lookbook'
+    | '/maison'
+    | '/our-world'
+    | '/shop'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/accessories'
+    | '/beauty'
+    | '/cart'
+    | '/clothing'
+    | '/collections'
+    | '/login'
+    | '/lookbook'
+    | '/maison'
+    | '/our-world'
+    | '/shop'
+  id:
+    | '__root__'
+    | '/'
+    | '/accessories'
+    | '/beauty'
+    | '/cart'
+    | '/clothing'
+    | '/collections'
+    | '/login'
+    | '/lookbook'
+    | '/maison'
+    | '/our-world'
+    | '/shop'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccessoriesRoute: typeof AccessoriesRoute
+  BeautyRoute: typeof BeautyRoute
+  CartRoute: typeof CartRoute
+  ClothingRoute: typeof ClothingRoute
+  CollectionsRoute: typeof CollectionsRoute
+  LoginRoute: typeof LoginRoute
+  LookbookRoute: typeof LookbookRoute
+  MaisonRoute: typeof MaisonRoute
+  OurWorldRoute: typeof OurWorldRoute
+  ShopRoute: typeof ShopRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +182,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/accessories': {
+      id: '/accessories'
+      path: '/accessories'
+      fullPath: '/accessories'
+      preLoaderRoute: typeof AccessoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/beauty': {
+      id: '/beauty'
+      path: '/beauty'
+      fullPath: '/beauty'
+      preLoaderRoute: typeof BeautyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cart': {
+      id: '/cart'
+      path: '/cart'
+      fullPath: '/cart'
+      preLoaderRoute: typeof CartRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/clothing': {
+      id: '/clothing'
+      path: '/clothing'
+      fullPath: '/clothing'
+      preLoaderRoute: typeof ClothingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/collections': {
+      id: '/collections'
+      path: '/collections'
+      fullPath: '/collections'
+      preLoaderRoute: typeof CollectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lookbook': {
+      id: '/lookbook'
+      path: '/lookbook'
+      fullPath: '/lookbook'
+      preLoaderRoute: typeof LookbookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/maison': {
+      id: '/maison'
+      path: '/maison'
+      fullPath: '/maison'
+      preLoaderRoute: typeof MaisonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/our-world': {
+      id: '/our-world'
+      path: '/our-world'
+      fullPath: '/our-world'
+      preLoaderRoute: typeof OurWorldRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/shop': {
+      id: '/shop'
+      path: '/shop'
+      fullPath: '/shop'
+      preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccessoriesRoute: AccessoriesRoute,
+  BeautyRoute: BeautyRoute,
+  CartRoute: CartRoute,
+  ClothingRoute: ClothingRoute,
+  CollectionsRoute: CollectionsRoute,
+  LoginRoute: LoginRoute,
+  LookbookRoute: LookbookRoute,
+  MaisonRoute: MaisonRoute,
+  OurWorldRoute: OurWorldRoute,
+  ShopRoute: ShopRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
