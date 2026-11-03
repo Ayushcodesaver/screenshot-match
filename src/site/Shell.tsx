@@ -20,7 +20,7 @@ const depts = [
 ] as const;
 
 // Runway home runs a standalone script, so links into it do a full page load.
-const Nav = ({ to, children, className }: { to: string; children: ReactNode; className?: string }) =>
+const Nav = ({ to, children, className }: { to: string; children: ReactNode; className?: string | undefined }) =>
   to === "/" ? <a href="/" className={className}>{children}</a> : (
     <Link to={to} className={className} activeProps={{ className: "text-foreground" }}>{children}</Link>
   );
