@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Customer accounts use Lovable Cloud auth; profiles and orders are read/written from the browser under per-user RLS, and order totals are priced by a database trigger so the client cannot set prices. Keep item prices in that trigger in sync with src/site/data.ts.
