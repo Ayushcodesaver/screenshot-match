@@ -11,7 +11,7 @@ export const Route = createFileRoute("/cart")({
 
 function Cart() {
   const { items, removeAt } = useCart();
-  const lines = items.map((id) => ITEMS[id]).filter(Boolean);
+  const lines = items.map((id) => ITEMS[id]).filter((i): i is (typeof ITEMS)[number] => Boolean(i));
   const total = lines.reduce((s, i) => s + i.price, 0);
   return (
     <Shell>
