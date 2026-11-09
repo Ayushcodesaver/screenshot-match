@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AccessoriesRouteImport } from './routes/accessories'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BeautyRouteImport } from './routes/beauty'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as ClothingRouteImport } from './routes/clothing'
@@ -19,15 +21,25 @@ import { Route as LookbookRouteImport } from './routes/lookbook'
 import { Route as MaisonRouteImport } from './routes/maison'
 import { Route as OurWorldRouteImport } from './routes/our-world'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccessoriesRoute = AccessoriesRouteImport.update({
   id: '/accessories',
   path: '/accessories',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BeautyRoute = BeautyRouteImport.update({
@@ -70,10 +82,16 @@ const ShopRoute = ShopRouteImport.update({
   path: '/shop',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accessories': typeof AccessoriesRoute
+  '/auth': typeof AuthRoute
   '/beauty': typeof BeautyRoute
   '/cart': typeof CartRoute
   '/clothing': typeof ClothingRoute
@@ -82,10 +100,12 @@ export interface FileRoutesByFullPath {
   '/maison': typeof MaisonRoute
   '/our-world': typeof OurWorldRoute
   '/shop': typeof ShopRoute
+  '/account': typeof AuthenticatedAccountRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accessories': typeof AccessoriesRoute
+  '/auth': typeof AuthRoute
   '/beauty': typeof BeautyRoute
   '/cart': typeof CartRoute
   '/clothing': typeof ClothingRoute
@@ -94,11 +114,14 @@ export interface FileRoutesByTo {
   '/maison': typeof MaisonRoute
   '/our-world': typeof OurWorldRoute
   '/shop': typeof ShopRoute
+  '/account': typeof AuthenticatedAccountRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/accessories': typeof AccessoriesRoute
+  '/auth': typeof AuthRoute
   '/beauty': typeof BeautyRoute
   '/cart': typeof CartRoute
   '/clothing': typeof ClothingRoute
@@ -107,12 +130,14 @@ export interface FileRoutesById {
   '/maison': typeof MaisonRoute
   '/our-world': typeof OurWorldRoute
   '/shop': typeof ShopRoute
+  '/_authenticated/account': typeof AuthenticatedAccountRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/accessories'
+    | '/auth'
     | '/beauty'
     | '/cart'
     | '/clothing'
@@ -121,10 +146,12 @@ export interface FileRouteTypes {
     | '/maison'
     | '/our-world'
     | '/shop'
+    | '/account'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/accessories'
+    | '/auth'
     | '/beauty'
     | '/cart'
     | '/clothing'
@@ -133,10 +160,13 @@ export interface FileRouteTypes {
     | '/maison'
     | '/our-world'
     | '/shop'
+    | '/account'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/accessories'
+    | '/auth'
     | '/beauty'
     | '/cart'
     | '/clothing'
@@ -145,11 +175,14 @@ export interface FileRouteTypes {
     | '/maison'
     | '/our-world'
     | '/shop'
+    | '/_authenticated/account'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AccessoriesRoute: typeof AccessoriesRoute
+  AuthRoute: typeof AuthRoute
   BeautyRoute: typeof BeautyRoute
   CartRoute: typeof CartRoute
   ClothingRoute: typeof ClothingRoute
@@ -169,11 +202,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accessories': {
       id: '/accessories'
       path: '/accessories'
       fullPath: '/accessories'
       preLoaderRoute: typeof AccessoriesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/beauty': {
@@ -232,12 +279,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ShopRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AccessoriesRoute: AccessoriesRoute,
+  AuthRoute: AuthRoute,
   BeautyRoute: BeautyRoute,
   CartRoute: CartRoute,
   ClothingRoute: ClothingRoute,
