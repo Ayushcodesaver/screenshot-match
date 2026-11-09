@@ -15,7 +15,6 @@ import { Route as BeautyRouteImport } from './routes/beauty'
 import { Route as CartRouteImport } from './routes/cart'
 import { Route as ClothingRouteImport } from './routes/clothing'
 import { Route as CollectionsRouteImport } from './routes/collections'
-import { Route as LoginRouteImport } from './routes/login'
 import { Route as LookbookRouteImport } from './routes/lookbook'
 import { Route as MaisonRouteImport } from './routes/maison'
 import { Route as OurWorldRouteImport } from './routes/our-world'
@@ -51,11 +50,6 @@ const CollectionsRoute = CollectionsRouteImport.update({
   path: '/collections',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const LookbookRoute = LookbookRouteImport.update({
   id: '/lookbook',
   path: '/lookbook',
@@ -84,7 +78,6 @@ export interface FileRoutesByFullPath {
   '/cart': typeof CartRoute
   '/clothing': typeof ClothingRoute
   '/collections': typeof CollectionsRoute
-  '/login': typeof LoginRoute
   '/lookbook': typeof LookbookRoute
   '/maison': typeof MaisonRoute
   '/our-world': typeof OurWorldRoute
@@ -97,7 +90,6 @@ export interface FileRoutesByTo {
   '/cart': typeof CartRoute
   '/clothing': typeof ClothingRoute
   '/collections': typeof CollectionsRoute
-  '/login': typeof LoginRoute
   '/lookbook': typeof LookbookRoute
   '/maison': typeof MaisonRoute
   '/our-world': typeof OurWorldRoute
@@ -111,7 +103,6 @@ export interface FileRoutesById {
   '/cart': typeof CartRoute
   '/clothing': typeof ClothingRoute
   '/collections': typeof CollectionsRoute
-  '/login': typeof LoginRoute
   '/lookbook': typeof LookbookRoute
   '/maison': typeof MaisonRoute
   '/our-world': typeof OurWorldRoute
@@ -126,7 +117,6 @@ export interface FileRouteTypes {
     | '/cart'
     | '/clothing'
     | '/collections'
-    | '/login'
     | '/lookbook'
     | '/maison'
     | '/our-world'
@@ -139,7 +129,6 @@ export interface FileRouteTypes {
     | '/cart'
     | '/clothing'
     | '/collections'
-    | '/login'
     | '/lookbook'
     | '/maison'
     | '/our-world'
@@ -152,7 +141,6 @@ export interface FileRouteTypes {
     | '/cart'
     | '/clothing'
     | '/collections'
-    | '/login'
     | '/lookbook'
     | '/maison'
     | '/our-world'
@@ -166,7 +154,6 @@ export interface RootRouteChildren {
   CartRoute: typeof CartRoute
   ClothingRoute: typeof ClothingRoute
   CollectionsRoute: typeof CollectionsRoute
-  LoginRoute: typeof LoginRoute
   LookbookRoute: typeof LookbookRoute
   MaisonRoute: typeof MaisonRoute
   OurWorldRoute: typeof OurWorldRoute
@@ -217,13 +204,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CollectionsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/lookbook': {
       id: '/lookbook'
       path: '/lookbook'
@@ -262,7 +242,6 @@ const rootRouteChildren: RootRouteChildren = {
   CartRoute: CartRoute,
   ClothingRoute: ClothingRoute,
   CollectionsRoute: CollectionsRoute,
-  LoginRoute: LoginRoute,
   LookbookRoute: LookbookRoute,
   MaisonRoute: MaisonRoute,
   OurWorldRoute: OurWorldRoute,
