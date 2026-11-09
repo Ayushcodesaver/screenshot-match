@@ -1,4 +1,7 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { useUser } from "@/site/session";
 import { Shell, pageHead } from "@/site/Shell";
 import { ItemImage } from "@/site/Crop";
 import { useCart } from "@/site/cart";
@@ -10,7 +13,20 @@ export const Route = createFileRoute("/cart")({
 });
 
 function Cart() {
-  const { items, removeAt } = useCart();
+  const { items, removeAt, clear } = useCart();
+  const { user } = useUser();
+  const nav = useNavigate();
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  async function checkout() {
+    if (!user) return;
+    setBusy(true); setErr(null);
+    const { error } = await supabase.from("orders").insert({ user_id: user.id, items });
+    setBusy(false);
+    if (error) return setErr("Your order couldn't be placed. Please try again.");
+    clear();
+    nav({ to: "/account" });
+  }
   const lines = items.map((id) => ITEMS[id]).filter((i): i is (typeof ITEMS)[number] => Boolean(i));
   const total = lines.reduce((s, i) => s + i.price, 0);
   return (
@@ -38,7 +54,12 @@ function Cart() {
               <span className="wide text-xs tracking-[.14em]">Total</span>
               <span className="text-lg">{money(total)}</span>
             </div>
-            <button className="wide mt-8 w-full bg-foreground py-4 text-[10px] tracking-[.16em] text-background">Checkout</button>
+            {user ? (
+              <button onClick={checkout} disabled={busy} className="wide mt-8 w-full bg-foreground py-4 text-[10px] tracking-[.16em] text-background disabled:opacity-50">Place order</button>
+            ) : (
+              <Link to="/auth" className="wide mt-8 block w-full bg-foreground py-4 text-center text-[10px] tracking-[.16em] text-background">Sign in to check out</Link>
+            )}
+            {err && <p className="mt-4 text-sm text-destructive">{err}</p>}
           </>
         )}
       </section>

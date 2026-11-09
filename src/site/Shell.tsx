@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { useCart } from "./cart";
+import { useUser } from "./session";
 import { ITEMS, money, type Item } from "./data";
 import { ItemImage } from "./Crop";
 
@@ -27,6 +28,7 @@ const Nav = ({ to, children, className }: { to: string; children: ReactNode; cla
 
 export function Shell({ children }: { children: ReactNode }) {
   const { items } = useCart();
+  const { user } = useUser();
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-20 bg-background px-4 pb-3 pt-4 md:px-12 md:pt-5">
@@ -36,7 +38,7 @@ export function Shell({ children }: { children: ReactNode }) {
             {tabs.map((t) => <Nav key={t.label} to={t.to} className="transition-colors hover:text-foreground">{t.label}</Nav>)}
           </nav>
           <div className="wide flex items-center justify-end gap-5 text-[10px] tracking-[.12em]">
-            <Link to="/login" className="hidden md:inline">Login</Link>
+            {user ? <Link to="/account" className="hidden md:inline">Account</Link> : <Link to="/auth" className="hidden md:inline">Login</Link>}
             <Link to="/cart">Cart ({items.length})</Link>
           </div>
         </div>
