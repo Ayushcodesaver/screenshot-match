@@ -1,7 +1,9 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { PageIntro, Shell, pageHead } from "@/site/Shell";
 import { LookImage } from "@/site/Crop";
-import { LOOKS } from "@/site/data";
+import { LOOKS as ALL } from "@/site/data";
+import type { Look } from "@/site/data";
+const LOOKS = ALL as [Look, Look, Look, Look, Look, Look];
 
 export const Route = createFileRoute("/collections")({
   head: () => pageHead("Collections", "Explore Maison Vell collections, led by Spring Summer 2027."),
