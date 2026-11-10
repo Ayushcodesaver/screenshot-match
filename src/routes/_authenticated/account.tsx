@@ -4,9 +4,12 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Shell, pageHead } from "@/site/Shell";
 import { ITEMS, money } from "@/site/data";
+import { Button } from "@/components/ui/button";
+import { RefreshCw } from "lucide-react";
+import { OrderTracking } from "@/site/OrderTracking";
 
 export const Route = createFileRoute("/_authenticated/account")({
-  head: () => pageHead("My account", "Your Maison Vell details and order history."),
+  head: () => pageHead("My account", "Your Maison Vell account details, order history and delivery tracking."),
   component: Account,
 });
 
@@ -19,16 +22,21 @@ type Key = (typeof FIELDS)[number][0];
 function Account() {
   const qc = useQueryClient();
   const nav = useNavigate();
-  const { data } = useQuery({
+  const { data, error, isPending, isFetching, refetch } = useQuery({
     queryKey: ["account"],
+    refetchInterval: 30_000,
     queryFn: async () => {
-      const { data: u } = await supabase.auth.getUser();
-      const uid = u.user!.id;
+      const { data: u, error: authError } = await supabase.auth.getUser();
+      if (authError) throw authError;
+      if (!u.user) throw new Error("Please sign in to view your orders.");
+      const uid = u.user.id;
       const [p, o] = await Promise.all([
         supabase.from("profiles").select("*").eq("id", uid).maybeSingle(),
-        supabase.from("orders").select("*").order("created_at", { ascending: false }),
+        supabase.from("orders").select("*").eq("user_id", uid).order("created_at", { ascending: false }),
       ]);
-      return { uid, email: u.user!.email ?? "", profile: p.data, orders: o.data ?? [] };
+      if (p.error) throw p.error;
+      if (o.error) throw o.error;
+      return { uid, email: u.user.email ?? "", profile: p.data, orders: o.data ?? [] };
     },
   });
   const [form, setForm] = useState<Record<Key, string>>({ full_name: "", phone: "", address: "", city: "", postal_code: "", country: "" });
@@ -74,19 +82,25 @@ function Account() {
             </div>
           </form>
           <div>
-            <h2 className="wide text-sm tracking-[.16em]">Order history</h2>
+            <div className="flex items-center justify-between gap-4">
+              <h2 className="wide text-sm tracking-[.16em]">Order history</h2>
+              <Button variant="ghost" size="icon" onClick={() => void refetch()} disabled={isFetching} aria-label="Refresh order status" title="Refresh order status"><RefreshCw className={isFetching ? "animate-spin motion-reduce:animate-none" : ""} /></Button>
+            </div>
+            {isPending && <p className="mt-6 text-sm text-mid" role="status">Loading orders…</p>}
+            {error && <p className="mt-6 text-sm text-destructive" role="alert">Orders couldn't be loaded. Please try refreshing.</p>}
             {data && data.orders.length === 0 && <p className="mt-6 text-mid">No orders yet.</p>}
             <ul className="mt-6 space-y-px">
               {data?.orders.map((o) => {
                 const ids = (o.items as number[]) ?? [];
                 return (
                   <li key={o.id} className="bg-rail p-6">
-                    <div className="flex justify-between">
+                    <div className="flex flex-wrap justify-between gap-3">
                       <span className="wide text-[10px] tracking-[.14em]">Order {o.id.slice(0, 8).toUpperCase()}</span>
                       <span className="text-sm">{money(o.total)}</span>
                     </div>
-                    <p className="mt-1.5 text-sm text-mid">{new Date(o.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })} · {o.status}</p>
+                    <p className="mt-1.5 text-sm text-mid">{new Date(o.created_at).toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" })}</p>
                     <p className="mt-3 text-sm">{ids.map((i) => ITEMS[i]?.name).filter(Boolean).join(", ")}</p>
+                    <OrderTracking order={o} />
                   </li>
                 );
               })}
