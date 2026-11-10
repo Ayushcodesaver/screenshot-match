@@ -16,26 +16,41 @@ export type Database = {
     Tables: {
       orders: {
         Row: {
+          confirmed_at: string | null
           created_at: string
+          delivered_at: string | null
           id: string
           items: Json
+          processing_at: string | null
+          shipped_at: string | null
           status: string
+          status_updated_at: string | null
           total: number
           user_id: string
         }
         Insert: {
+          confirmed_at?: string | null
           created_at?: string
+          delivered_at?: string | null
           id?: string
           items?: Json
+          processing_at?: string | null
+          shipped_at?: string | null
           status?: string
+          status_updated_at?: string | null
           total?: number
           user_id: string
         }
         Update: {
+          confirmed_at?: string | null
           created_at?: string
+          delivered_at?: string | null
           id?: string
           items?: Json
+          processing_at?: string | null
+          shipped_at?: string | null
           status?: string
+          status_updated_at?: string | null
           total?: number
           user_id?: string
         }
@@ -82,7 +97,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      order_status_rank: { Args: { value: string }; Returns: number }
     }
     Enums: {
       [_ in never]: never

@@ -15,6 +15,13 @@
       "when": 1794205688863,
       "tag": "0001_migration",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1794330463844,
+      "tag": "0002_order_tracking_milestones",
+      "breakpoints": true
     }
   ]
 }
